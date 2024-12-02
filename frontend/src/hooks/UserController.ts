@@ -10,7 +10,7 @@ export const UseLogin = () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch("/user/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const UseRegister = () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch("/user/register", {
+      const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export const useUpdateProfile = () => {
         throw new Error("User is not authenticated");
       }
 
-      const response = await fetch("/user/profile", {
+      const response = await fetch("/api/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

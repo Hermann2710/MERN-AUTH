@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useReducer } from "react";
 import User from "../interfaces/User";
 
 const fetchUser = async (token: string): Promise<User> => {
-  const response = await fetch("/user/profile", {
+  const response = await fetch("/api/profile", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

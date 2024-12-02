@@ -8,6 +8,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import FormButton from "../components/FormButton";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [data, setData] = useState({
@@ -18,6 +19,7 @@ function Register() {
 
   const { register, error, loading } = UseRegister();
   const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -36,6 +38,7 @@ function Register() {
       notify;
     } else if (json) {
       dispatch && dispatch({ type: "LOGIN", payload: json });
+      navigate('/');
     }
   };
 
@@ -86,7 +89,7 @@ function Register() {
           Already have an account?{" "}
           <Link
             className="text-red-300 transition-all ease-in-out duration-500 hover:text-red-600"
-            to="/login"
+            to="/account/login"
           >
             Sign in
           </Link>

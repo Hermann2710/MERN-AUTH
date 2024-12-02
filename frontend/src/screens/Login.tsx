@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import FormControl from "../components/FormControl";
 import { useContext, useState } from "react";
@@ -7,6 +7,7 @@ import { UseLogin } from "../hooks/UserController";
 import { toast } from "react-toastify";
 import { AuthContext } from "../contexts/AuthContext";
 import ThemeSwitcher from "../components/ThemeSwitcher";
+import FormButton from "../components/FormButton";
 
 function Login() {
   const [data, setData] = useState({
@@ -15,8 +16,8 @@ function Login() {
   });
 
   const { dispatch } = useContext(AuthContext);
-
   const { login, loading, error } = UseLogin();
+  const navigate = useNavigate();
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -35,6 +36,8 @@ function Login() {
         notify;
     }else if(json) {
         dispatch && dispatch({ type: "LOGIN", payload: json });
+        console.log(dispatch);
+        navigate('/');
     }
   };
 
@@ -70,15 +73,13 @@ function Login() {
             required
           />
           <Link className="text-end font-medium text-red-400 hover:underline transition-all ease-in-out duration-500" to="#">Forgot password?</Link>
-          <button disabled={loading} className="w-full bg-red-500 text-white py-3 font-bold hover:bg-red-600 transition-all duration-500 ease-in-out mt-5 rounded-lg">
-            Sign Up
-          </button>
+          <FormButton loading={loading} type="submit" text="Sign in" />
         </form>
         <p className="text-center font-medium mt-5">
           Don't have an account?{" "}
           <Link
             className="text-red-300 transition-all ease-in-out duration-500 hover:text-red-600"
-            to="/register"
+            to="/account/register"
           >
             Sign Up
           </Link>

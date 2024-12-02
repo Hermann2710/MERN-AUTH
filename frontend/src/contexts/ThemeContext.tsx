@@ -24,7 +24,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <main data-theme={theme} className="h-screen w-screen">
+      <main data-theme={theme} className="h-screen w-screen relative">
         {children}
       </main>
     </ThemeContext.Provider>
