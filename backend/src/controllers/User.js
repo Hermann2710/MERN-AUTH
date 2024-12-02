@@ -55,7 +55,7 @@ const updatePassword = async function (req, res) {
     const id = req.user;
     const data = req.body;
 
-    const user = await User.updateProfile({ ...data, id: id });
+    const user = await User.updatePassword({ ...data, id: id });
     res.status(200).json({ user });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -64,12 +64,12 @@ const updatePassword = async function (req, res) {
 
 const updateImage = async function (req, res) {
   try {
-    const path = req.files.path;
+    const path = req.file.path;
     const id = req.user;
-
     const user = await User.updateImage({ path, id });
     res.status(200).json({ user });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: error.message });
   }
 };
@@ -77,7 +77,7 @@ const updateImage = async function (req, res) {
 const deleteProfile = async function (req, res) {
   try {
     const id = req.user;
-    const user = await User.deleteProfile(id);
+    const user = await User.deleteUser(id);
     res.status(200).json({ user });
   } catch (error) {
     res.status(400).json({ error: error.message });
