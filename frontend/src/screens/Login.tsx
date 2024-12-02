@@ -32,11 +32,9 @@ function Login() {
     event.preventDefault();
     const json = await login(data);
     if(error) {    
-        const notify = toast(error);
-        notify;
+        return toast.error(error);
     }else if(json) {
         dispatch && dispatch({ type: "LOGIN", payload: json });
-        console.log(dispatch);
         navigate('/');
     }
   };

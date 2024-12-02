@@ -8,12 +8,12 @@ import Footer from "../components/Footer";
 function DashboardLayout() {
   const { theme } = useContext(ThemeContext);
   return (
-    <>
+    <div className="flex flex-1 flex-col">
       <Navbar />
       <Outlet />
       <Footer />
       <ToastContainer position="top-right" theme={theme} />
-    </>
+    </div>
   );
 }
 

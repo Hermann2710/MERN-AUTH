@@ -6,6 +6,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../screens/Dashboard";
 import Settings from "../screens/Dashboard/Settings";
+import EditProfileImage from "../screens/Dashboard/EditProfileImage";
 
 const Routes: RouteObject[] = [
   {
@@ -14,7 +15,8 @@ const Routes: RouteObject[] = [
     errorElement: <Notfound />,
     children: [
       { path: "", Component: Dashboard },
-      { path: "/settings", Component: Settings }
+      { path: "/settings", Component: Settings },
+      { path: "/profile-image", Component: EditProfileImage },
     ]
   },
   {

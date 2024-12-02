@@ -12,7 +12,6 @@ function Settings() {
           <div className="flex flex-col w-full p-3 md:w-10/12 lg:w-8/12">
             <Breadcrumb location="Settings" />
             <EditPassword id="password" />
-            <EditPassword id="password" />
             <EditProfile id="profile" />
           </div>
         </div>

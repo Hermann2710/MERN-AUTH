@@ -34,8 +34,7 @@ function Register() {
     event.preventDefault();
     const json = await register(data);
     if (error) {
-      const notify = toast(error);
-      notify;
+      return toast.error(error);
     } else if (json) {
       dispatch && dispatch({ type: "LOGIN", payload: json });
       navigate('/');

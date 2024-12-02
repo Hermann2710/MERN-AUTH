@@ -1,14 +1,20 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
 import FormControl from "../../components/FormControl";
 import { BsAt } from "react-icons/bs";
 import FormButton from "../../components/FormButton";
 import { TfiEmail } from "react-icons/tfi";
+import { useUpdateProfile } from "../../hooks/UserController";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../contexts/AuthContext";
 
-function EditProfile({id}: {id: string}) {
+function EditProfile({ id }: { id: string }) {
   const [data, setData] = useState({
     username: "",
     email: "",
   });
+
+  const { error, loading, updateProfile } = useUpdateProfile();
+  const { dispatch } = useContext(AuthContext);
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -20,11 +26,24 @@ function EditProfile({id}: {id: string}) {
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
-  }
+    if (!data.email || !data.username) {
+      return toast.error("All fields must be provides");
+    } else if (!data.email.includes("@")) {
+      return toast.error("Email must be valid");
+    } else {
+      const json = await updateProfile(data);
+      if (error) {
+        return toast.error(error);
+      } else if (json) {
+        dispatch && dispatch({ type: "UPDATE", payload: json });
+        return toast.success("Profile updated");
+      }
+    }
+  };
 
   return (
     <section id={id}>
-      <h1 className="mt-5 font-bold text-xl mb-20 sm:mb-10">Edit profile</h1>
+      <h1 className="mt-5 font-bold text-xl mb-10 sm:mb-10">Edit profile</h1>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <FormControl
           handleChange={onInputChange}
@@ -44,7 +63,7 @@ function EditProfile({id}: {id: string}) {
           type="email"
           Icon={TfiEmail}
         />
-        <FormButton text="Edit profile" type="button" />
+        <FormButton loading={loading} text="Edit profile" type="submit" />
       </form>
     </section>
   );

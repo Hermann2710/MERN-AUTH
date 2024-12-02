@@ -74,6 +74,14 @@ function Navbar() {
             >
               Settings
             </NavLink>
+            <NavLink
+              className={`${
+                pathName.pathname === "/profile-image" && "text-red-500 font-bold"
+              }`}
+              to="/profile-image"
+            >
+              P-Image
+            </NavLink>
           </div>
           <div className="flex flex-row gap-3 text-xl">
             <BiLogOut

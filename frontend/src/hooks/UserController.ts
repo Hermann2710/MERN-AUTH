@@ -123,7 +123,10 @@ export const useUpdateProfileImage = () => {
         throw new Error("User is not authenticated");
       }
 
-      const response = await axios.put("/user/profile/image", data, {
+      const form = new FormData();
+      form.append("profileImage", data);
+
+      const response = await axios.put("/api/profile/image", form, {
         headers: {
           authorization: "Bearer " + token,
         },
@@ -144,3 +147,79 @@ export const useUpdateProfileImage = () => {
 
   return { updateProfileImage, error, loading };
 };
+
+export const useUpdatePassword = () => {
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const updatePassword = async (data: any) => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const token = localStorage.getItem("token") as string;
+      if (!token) {
+        throw new Error("User is not authenticated");
+      }
+
+      const response = await fetch("/api/profile/password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(data),
+      });
+
+      const json = await response.json();
+
+      if (json.error) {
+        setError(json.error as string);
+      } else {
+        return json;
+      }
+    } catch (error: any) {
+      setError(error.message as string);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { error, loading, updatePassword };
+};
+
+export const useDeleteProfile = () => {
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const deleteProfile = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const token = localStorage.getItem("token") as string;
+      if(!token) {
+        setError("User not logged in");
+      }else {
+        const response = await fetch("/api/profile", {
+          method: "DELETE",
+          headers: {
+            authorization: "Bearer " + token
+          }
+        });
+        const json = await response.json();
+        if (json.error) {
+          setError(json.error as string);
+        } else {
+          return json;
+          }
+      }
+    } catch (error: any) {
+      setError(error.message as string);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return { error, loading, deleteProfile };
+}
