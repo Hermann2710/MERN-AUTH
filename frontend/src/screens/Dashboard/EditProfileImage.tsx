@@ -12,7 +12,7 @@ function EditProfileImage() {
   const [image, setImage] = useState<File>();
   const { theme } = useContext(ThemeContext);
   const { error, loading, updateProfileImage } = useUpdateProfileImage();
-  const { dispatch, user } = useContext(AuthContext);
+  const { dispatch, user, isAuthenticated } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -43,7 +43,7 @@ function EditProfileImage() {
     }
   };
 
-  return user ? (
+  return isAuthenticated && user ? (
     <div className="w-screen flex justify-center">
       <div className="flex flex-col w-full p-3 md:w-10/12 lg:w-8/12">
         <Breadcrumb location="Edit profile Image" />
